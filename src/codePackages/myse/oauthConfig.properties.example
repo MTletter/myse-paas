@@ -1,0 +1,60 @@
+# ============================================================
+# 【部署鉴权配置模板】
+#
+# 本文件是 oauthConfig.properties 的脱敏模板。
+# 使用方式：复制为 oauthConfig.properties，再把占位符替换成真实凭据。
+#   cp oauthConfig.properties.example oauthConfig.properties
+#
+# 真实凭据不会入库（oauthConfig.properties 已在 .gitignore 中排除）。
+# ============================================================
+
+#POD-UAT
+userName=YOUR_USERNAME
+password=YOUR_PASSWORD
+securityCode=YOUR_SECURITY_CODE
+clientId=YOUR_CLIENT_ID
+clientSecret=YOUR_CLIENT_SECRET
+domain=https://api-sandbox.xiaoshouyi.com
+tokenURL=https://login-sandbox.xiaoshouyi.com/auc/oauth2/token
+gateway=https://crm-sandbox.xiaoshouyi.com
+
+#POD-UAT2
+#userName=YOUR_USERNAME
+#password=YOUR_PASSWORD
+#securityCode=YOUR_SECURITY_CODE
+#clientId=YOUR_CLIENT_ID
+#clientSecret=YOUR_CLIENT_SECRET
+#domain=https://api-sandbox.xiaoshouyi.com
+#tokenURL=https://login-sandbox.xiaoshouyi.com/auc/oauth2/token
+#gateway=https://crm-sandbox.xiaoshouyi.com
+
+#POD-PROD
+#userName=YOUR_USERNAME
+#password=YOUR_PASSWORD
+#securityCode=YOUR_SECURITY_CODE
+#clientId=YOUR_CLIENT_ID
+#clientSecret=YOUR_CLIENT_SECRET
+#domain=https://api-ent.xiaoshouyi.com/
+#tokenURL=https://login.xiaoshouyi.com/auc/oauth2/token
+#gateway=https://crm-ent.xiaoshouyi.com
+
+# ============================================================
+# 【用法】发布工具 tools/deploy.py 按本文件取鉴权信息
+#
+#   · 开关规则：某个块里【未以 # 开头】的 key=value 即为"启用"。
+#     也就是：想切到哪个环境，就把那个环境的 # 去掉，其余整块注释掉。
+#     只能有一个环境处于启用状态 —— 同时启用多个，发布工具会直接报错中止
+#     （防止把代码包发到错误的环境）。
+#
+#   · 平台密码 = password + securityCode（脚本自动拼接）
+#
+#   · tokenURL（可选）：OAuth 登录地址。
+#     不写时按 domain 推导：api-sandbox.xiaoshouyi.com → login-sandbox.xiaoshouyi.com
+#                           api-ent.xiaoshouyi.com     → login.xiaoshouyi.com
+#
+#   · gateway（可选）：代码包安装网关（PaaS 元数据网关）。
+#     ⚠️ 与上面的 domain 不是一回事：
+#         domain   = 业务 OpenAPI 网关（api-sandbox / api-ent）
+#         gateway  = 代码包上传安装网关（crm-sandbox / crm-ent）
+#     不写时默认 https://crm-sandbox.xiaoshouyi.com（沙盒）。
+# ============================================================

@@ -1,0 +1,53 @@
+<idea-plugin>
+    <id>com.myse.deployer</id>
+    <name>mySE Deployer</name>
+    <vendor>mySE</vendor>
+
+    <description><![CDATA[
+        销售易 mySE 代码包发布工具（跨平台：Windows / macOS）。<br/>
+        <b>Tools → mySE 发布</b>：<br/>
+        · <b>发布当前包</b> —— 按当前编辑的文件自动判断所属代码包，一键发布（最常用）<br/>
+        · <b>校验当前包</b> —— 只做本地 javac 1.8 编译校验，不上传<br/>
+        · <b>发布指定包…</b> —— 勾选要发布的包（可多选）<br/>
+        · <b>发布全部包</b> —— 依次发布 6 个包<br/>
+        底层调用项目的 <code>tools/deploy.py</code>（编译→打包→刷 token→上传→安装）。
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <notificationGroup id="mySE Deployer" displayType="BALLOON"/>
+    </extensions>
+
+    <actions>
+        <group id="myse.deploy.group" text="mySE 发布" description="把 mySE 代码包发布到销售易沙盒" popup="true">
+            <action id="myse.deploy.current"
+                    class="com.myse.deployer.DeployCurrentFileAction"
+                    text="发布当前包"
+                    description="按当前编辑的文件自动判断所属代码包并发布到沙盒">
+                <add-to-group group-id="myse.deploy.group" anchor="first"/>
+            </action>
+            <action id="myse.deploy.currentCheck"
+                    class="com.myse.deployer.DeployCurrentFileCheckAction"
+                    text="校验当前包"
+                    description="只做本地编译校验，不上传不安装">
+                <add-to-group group-id="myse.deploy.group" anchor="after" relative-to-action="myse.deploy.current"/>
+            </action>
+            <action id="myse.deploy.choose"
+                    class="com.myse.deployer.DeployPackagesAction"
+                    text="发布指定包…"
+                    description="勾选要发布到沙盒的代码包（可多选）">
+                <add-to-group group-id="myse.deploy.group" anchor="after" relative-to-action="myse.deploy.currentCheck"/>
+            </action>
+            <action id="myse.deploy.all"
+                    class="com.myse.deployer.DeployAllAction"
+                    text="发布全部包"
+                    description="依次发布全部 6 个代码包">
+                <add-to-group group-id="myse.deploy.group" anchor="last"/>
+            </action>
+
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+        </group>
+    </actions>
+</idea-plugin>

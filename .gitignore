@@ -1,0 +1,24 @@
+# ===== 敏感凭据（绝不入库）=====
+.neo-cli/
+oauthConfig.properties
+
+# ===== IDE =====
+.idea/
+*.iml
+
+# ===== 编译/部署产物 =====
+target/
+out/
+.deploy-check/
+*.zip
+*.jar
+upload_body.bin
+
+# ===== 备份与临时目录 =====
+backup/
+backups/
+tmp-*/
+*.bak*
+
+# ===== 系统文件 =====
+.DS_Store

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  other.myse.messagecenter 包的脚本注册配置。
+  部署时由 deploy_messagecenter.py 以「scriptTrigger.xml」为名写入 ZIP 根目录
+  （必须与 other/ 目录同级，放子目录平台不认）。
+-->
+<configs>
+    <config>
+        <!-- 角色申请（roleRequest__c）审批通过后：给申请人发消息中心通知 -->
+        <approvalevent>
+            <object>roleRequest__c</object>
+            <operate>complete</operate>
+            <position>after</position>
+            <class>other.myse.messagecenter.flows.RoleRequestApprovalCompleted</class>
+        </approvalevent>
+
+        <!-- 角色申请（roleRequest__c）审批通过后：给申请人发消息中心通知 -->
+        <approvalevent>
+            <object>roleRequest__c</object>
+            <operate>return</operate>
+            <position>after</position>
+            <class>other.myse.messagecenter.flows.RoleRequestApprovalRefuse</class>
+        </approvalevent>
+
+        <!-- 角色申请（roleRequest__c）审批动作扩展：真正替审批人执行拒绝（走审批 OpenAPI） -->
+        <approvalevent>
+            <object>roleRequest__c</object>
+            <operate>nodeTiming</operate>
+            <position>timing</position>
+            <class>other.myse.messagecenter.flows.RoleRequestRejectApprovalEvent</class>
+        </approvalevent>
+    </config>
+</configs>

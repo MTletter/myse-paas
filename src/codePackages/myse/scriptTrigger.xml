@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  other.xsy.myse 主包的脚本注册配置。
+  部署时由 tools/deploy.py 以「scriptTrigger.xml」为名写入 ZIP 根目录
+  （必须与 other/ 目录同级，放子目录平台不认）。
+-->
+<configs>
+    <config>
+        <!-- 客户（account）修改 isEnable__c（启用状态）后：同步推送启用状态到 SAP ERP -->
+        <trigger>
+            <object>account</object>
+            <operate>update</operate>
+            <position>after</position>
+            <order>1</order>
+            <class>other.xsy.myse.flows.AccountEnablePushTrigger</class>
+        </trigger>
+    </config>
+</configs>
